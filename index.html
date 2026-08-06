@@ -141,6 +141,7 @@ button, a { -webkit-tap-highlight-color: transparent; }
   background: #000;
   pointer-events: none;
 }
+.intro-poster,
 .intro-video,
 .intro-bottom-fade,
 .intro-final-fade,
@@ -148,6 +149,17 @@ button, a { -webkit-tap-highlight-color: transparent; }
 .scroll-cue {
   position: fixed;
   pointer-events: none;
+}
+.intro-poster {
+  z-index: 0;
+  top: calc(var(--nav-height) - 1px);
+  left: -1px;
+  width: calc(100% + 2px);
+  height: calc(100vh - var(--nav-height) + 2px);
+  object-fit: cover;
+  object-position: center;
+  background: #000;
+  opacity: 1;
 }
 .intro-video {
   z-index: 1;
@@ -1273,7 +1285,7 @@ a.contact-value:hover { color: var(--accent); }
   *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
   .scroll-stage { height: 100vh; }
   .page-content { margin-top: 0; }
-  .intro-video, .intro-bottom-fade, .intro-final-fade, .hero-copy, .scroll-cue { position: absolute; }
+  .intro-poster, .intro-video, .intro-bottom-fade, .intro-final-fade, .hero-copy, .scroll-cue { position: absolute; }
   .scroll-cue { display: none; }
   .reveal { opacity: 1; transform: none; }
 }
@@ -1501,9 +1513,52 @@ body.quote-modal-open { overflow: hidden; }
   font-weight:700;
 }
 
+
+/* Mouse-following topographic spotlight */
+.topo-spotlight {
+  --spot-x: 50vw;
+  --spot-y: 50vh;
+  position: fixed;
+  inset: 0;
+  z-index: 11;
+  pointer-events: none;
+  opacity: 0;
+  background-image: url("topo-spotlight.png");
+  background-repeat: repeat;
+  background-size: 720px auto;
+  background-position: center;
+  mix-blend-mode: screen;
+  -webkit-mask-image: radial-gradient(
+    circle 230px at var(--spot-x) var(--spot-y),
+    rgba(0,0,0,1) 0%,
+    rgba(0,0,0,.74) 35%,
+    rgba(0,0,0,.28) 68%,
+    transparent 100%
+  );
+  mask-image: radial-gradient(
+    circle 230px at var(--spot-x) var(--spot-y),
+    rgba(0,0,0,1) 0%,
+    rgba(0,0,0,.74) 35%,
+    rgba(0,0,0,.28) 68%,
+    transparent 100%
+  );
+  transition: opacity .28s ease;
+}
+.topo-spotlight.is-active { opacity: .27; }
+
+@media (max-width: 820px), (pointer: coarse) {
+  .topo-spotlight { display: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .topo-spotlight { transition: none; }
+}
+
 </style>
+  <link rel="preload" href="vista-intro-poster-v15.jpg" as="image" type="image/jpeg" fetchpriority="high">
+  <link rel="preload" href="vista-intro-scroll-v18.mp4?v=2" as="video" type="video/mp4">
 </head>
 <body>
+  <div class="topo-spotlight" id="topo-spotlight" aria-hidden="true"></div>
 <header class="site-nav">
   <a class="brand" href="#top" aria-label="Vista Geomatics home"><img class="brand-logo" src="vista-logo-white.png" alt="Vista Geomatics"></a>
   <button class="menu-toggle" type="button" aria-label="Open navigation" aria-expanded="false"><span></span></button>
@@ -1522,8 +1577,9 @@ body.quote-modal-open { overflow: hidden; }
 </header>
 
 <main id="top">
+  <img class="intro-poster" id="intro-poster" src="vista-intro-poster-v15.jpg" alt="" fetchpriority="high" decoding="async" aria-hidden="true">
   <video class="intro-video" id="intro-video" muted playsinline preload="auto" poster="vista-intro-poster-v15.jpg" aria-label="Mountain and forest introduction for Vista Geomatics">
-    <source src="vista-intro-scroll-v15.mp4?v=18" type="video/mp4">
+    <source src="vista-intro-scroll-v18.mp4?v=2" type="video/mp4">
   </video>
   <div class="intro-bottom-fade" id="intro-bottom-fade" aria-hidden="true"></div>
   <div class="intro-final-fade" id="intro-final-fade" aria-hidden="true"></div>
@@ -1625,7 +1681,7 @@ body.quote-modal-open { overflow: hidden; }
             <span class="division-number">01 / Municipal</span>
             <h3>Municipal Surveying</h3>
             <p>Survey solutions for residential, commercial, subdivision, and development projects in Calgary and communities throughout Alberta.</p>
-            <div class="service-tags"><span>Real Property Reports</span><span>Property Lines</span><span>Rights-of-Way</span><span>Subdivision Plans</span><span>Development</span><span>Strata Plans</span><span>Development Permit Surveys</span><span>Grading Certificates</span><span>Topographic Surveys</span><span>Drone / UAV</span></div>
+            <div class="service-tags"><span>Real Property Reports</span><span>Property Lines</span><span>Rights-of-Way</span><span>Subdivision Plans</span><span>Development</span><span>Condominiums</span><span>Strata Plans</span><span>Development Permit Surveys</span><span>Grading Certificates</span><span>Topographic Surveys</span><span>Drone / UAV</span></div>
           </article>
           <article class="division-card reveal">
             <span class="division-number">02 / Construction</span>
@@ -1742,7 +1798,7 @@ body.quote-modal-open { overflow: hidden; }
           </div>
         </div>
         <aside class="contact-panel reveal" aria-label="Company contact information">
-          <div class="contact-item"><div class="contact-label">Email</div><a class="contact-value" href="mailto:info@vistageomatics.com">info@vistageomatics.com</a></div>
+          <div class="contact-item"><div class="contact-label">Email</div><a class="contact-value" href="mailto:requests@vistageomatics.com">requests@vistageomatics.com</a></div>
           <div class="contact-item"><div class="contact-label">Phone</div><a class="contact-value" href="tel:+14032704048">403.270.4048</a></div>
           <div class="contact-item"><div class="contact-label">Main Office</div><p class="contact-value">Bay 28, 2015 32 Avenue N.E.<br>Calgary, Alberta T2E 6Z3</p></div>
           <div class="contact-item"><div class="contact-label">Service Area</div><p class="contact-value">Calgary and projects throughout Alberta</p></div>
@@ -1826,10 +1882,12 @@ const cue = document.getElementById('scroll-cue');
 const menuButton = document.querySelector('.menu-toggle');
 const navLinks = document.querySelector('.nav-links');
 
-let playbackEnd = 14.58;
+let playbackEnd = 29.75;
 let desiredTime = 0;
+let displayedTime = 0;
 let mediaReady = false;
 let frameRequested = false;
+let videoFrameRequested = false;
 const clamp = (n, min, max) => Math.min(max, Math.max(min, n));
 const smoothstep = (a, b, value) => {
   const x = clamp((value - a) / Math.max(.0001, b - a), 0, 1);
@@ -1842,9 +1900,39 @@ function progress() {
 }
 
 function seekVideo() {
-  if (!mediaReady || video.seeking) return;
-  if (Math.abs(video.currentTime - desiredTime) > .018) {
-    try { video.currentTime = desiredTime; } catch (error) {}
+  if (!mediaReady) return;
+
+  if (!videoFrameRequested) {
+    videoFrameRequested = true;
+
+    const smoothSeek = () => {
+      if (!mediaReady) {
+        videoFrameRequested = false;
+        return;
+      }
+
+      const difference = desiredTime - displayedTime;
+
+      // Ease toward the scroll position instead of jumping directly to it.
+      // This removes the choppy frame-to-frame feeling on mouse-wheel scrolling.
+      displayedTime += difference * 0.22;
+
+      if (!video.seeking && Math.abs(video.currentTime - displayedTime) > .012) {
+        try { video.currentTime = clamp(displayedTime, 0, playbackEnd); } catch (error) {}
+      }
+
+      if (Math.abs(difference) > .025) {
+        requestAnimationFrame(smoothSeek);
+      } else {
+        displayedTime = desiredTime;
+        if (!video.seeking) {
+          try { video.currentTime = clamp(desiredTime, 0, playbackEnd); } catch (error) {}
+        }
+        videoFrameRequested = false;
+      }
+    };
+
+    requestAnimationFrame(smoothSeek);
   }
 }
 
@@ -1861,19 +1949,17 @@ function drawIntro() {
   cue.style.opacity = (1 - smoothstep(0, .055, p)).toFixed(3);
 
   // Gradually blend the lower trees into the black page as the visitor scrolls.
-  bottomFade.style.opacity = smoothstep(.03, .82, p).toFixed(3);
+  bottomFade.style.opacity = (0.18 * smoothstep(.45, 1, p)).toFixed(3);
   // Fade the full video to black before the next section enters, avoiding a visible cut.
-  const endFade = smoothstep(.84, 1, p);
-  finalFade.style.opacity = endFade.toFixed(3);
-  if (mediaReady) video.style.opacity = (1 - smoothstep(.88, 1, p)).toFixed(3);
+  finalFade.style.opacity = '0';
+  if (mediaReady) video.style.opacity = '1';
 
-  const visible = p < 1;
-  video.style.visibility = visible ? 'visible' : 'hidden';
-  bottomFade.style.visibility = visible ? 'visible' : 'hidden';
-  finalFade.style.visibility = visible ? 'visible' : 'hidden';
-  hero.style.visibility = visible ? 'visible' : 'hidden';
-  heroQuoteRail.style.visibility = visible ? 'visible' : 'hidden';
-  cue.style.visibility = visible ? 'visible' : 'hidden';
+  video.style.visibility = 'visible';
+  bottomFade.style.visibility = 'visible';
+  finalFade.style.visibility = 'visible';
+  hero.style.visibility = 'visible';
+  heroQuoteRail.style.visibility = 'visible';
+  cue.style.visibility = 'visible';
 }
 
 function requestDraw() {
@@ -1893,12 +1979,14 @@ function primeVideo() {
       mediaReady = true;
       video.classList.add('is-ready');
       desiredTime = progress() * playbackEnd;
+      displayedTime = desiredTime;
       seekVideo();
       requestDraw();
     }).catch(() => {
       mediaReady = true;
       video.classList.add('is-ready');
       desiredTime = progress() * playbackEnd;
+      displayedTime = desiredTime;
       seekVideo();
       requestDraw();
     });
@@ -1910,6 +1998,7 @@ function primeVideo() {
 }
 
 video.addEventListener('loadedmetadata', () => {
+  if (Number.isFinite(video.duration) && video.duration > 1) playbackEnd = Math.max(1, video.duration - .25);
   playbackEnd = Math.max(.1, (video.duration || 14.61) - .03);
   video.pause();
   primeVideo();
@@ -2038,5 +2127,41 @@ window.addEventListener('message', event => {
 });
 
 </script>
+
+<script>
+(() => {
+  const spotlight = document.getElementById('topo-spotlight');
+  const pageContent = document.querySelector('.page-content');
+  if (!spotlight || !pageContent || !window.matchMedia('(pointer:fine)').matches) return;
+
+  let raf = 0;
+  let x = window.innerWidth / 2;
+  let y = window.innerHeight / 2;
+
+  const draw = () => {
+    raf = 0;
+    spotlight.style.setProperty('--spot-x', `${x}px`);
+    spotlight.style.setProperty('--spot-y', `${y}px`);
+  };
+
+  const setActiveState = event => {
+    const contentTop = pageContent.getBoundingClientRect().top;
+    const overContent = event.clientY >= Math.max(0, contentTop);
+    spotlight.classList.toggle('is-active', overContent);
+  };
+
+  window.addEventListener('pointermove', event => {
+    x = event.clientX;
+    y = event.clientY;
+    setActiveState(event);
+    if (!raf) raf = requestAnimationFrame(draw);
+  }, { passive: true });
+
+  document.documentElement.addEventListener('mouseleave', () => {
+    spotlight.classList.remove('is-active');
+  });
+})();
+</script>
+
 </body>
 </html>
