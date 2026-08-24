@@ -4,75 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="author" content="Vista Geomatics Ltd.">
-<meta name="description" content="Calgary land surveyors providing Real Property Reports (RPRs), property line surveys, construction layout, topographic surveys, drone mapping and Alberta-wide survey services.">
-<meta name="robots" content="index, follow, max-image-preview:large">
-<link rel="canonical" href="https://vistageomatics.com/">
-<meta property="og:type" content="website">
-<meta property="og:locale" content="en_CA">
-<meta property="og:site_name" content="Vista Geomatics">
-<meta property="og:title" content="Calgary Land Surveyors &amp; RPR Services | Vista Geomatics">
-<meta property="og:description" content="Real Property Reports, property line surveys, construction layout, topographic surveys, drone mapping and professional land surveying across Alberta.">
-<meta property="og:url" content="https://vistageomatics.com/">
-<meta property="og:image" content="https://vistageomatics.com/vista-intro-poster-v15.jpg">
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Calgary Land Surveyors &amp; RPR Services | Vista Geomatics">
-<meta name="twitter:description" content="Professional RPR and land surveying services in Calgary and throughout Alberta.">
-<meta name="twitter:image" content="https://vistageomatics.com/vista-intro-poster-v15.jpg">
-<title>Calgary Land Surveyors &amp; RPR Services | Vista Geomatics</title>
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@graph": [
-    {
-      "@type": "WebSite",
-      "@id": "https://vistageomatics.com/#website",
-      "url": "https://vistageomatics.com/",
-      "name": "Vista Geomatics",
-      "publisher": { "@id": "https://vistageomatics.com/#business" }
-    },
-    {
-      "@type": "ProfessionalService",
-      "@id": "https://vistageomatics.com/#business",
-      "name": "Vista Geomatics Ltd.",
-      "url": "https://vistageomatics.com/",
-      "logo": "https://vistageomatics.com/vista-logo-white.png",
-      "image": "https://vistageomatics.com/vista-intro-poster-v15.jpg",
-      "description": "Calgary land surveying company providing Real Property Reports and professional survey services throughout Alberta.",
-      "telephone": "+1-403-270-4048",
-      "email": "requests@vistageomatics.com",
-      "address": {
-        "@type": "PostalAddress",
-        "streetAddress": "Bay 28, 2015 32 Avenue N.E.",
-        "addressLocality": "Calgary",
-        "addressRegion": "AB",
-        "postalCode": "T2E 6Z3",
-        "addressCountry": "CA"
-      },
-      "areaServed": [
-        { "@type": "City", "name": "Calgary" },
-        { "@type": "AdministrativeArea", "name": "Alberta" }
-      ],
-      "sameAs": [
-        "https://www.instagram.com/vistageomatics/",
-        "https://www.facebook.com/VistaGeomaticsLtd/",
-        "https://ca.linkedin.com/company/vista-geomatics-ltd"
-      ],
-      "hasOfferCatalog": {
-        "@type": "OfferCatalog",
-        "name": "Land Surveying Services",
-        "itemListElement": [
-          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Real Property Reports (RPRs)" } },
-          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Property Line Surveys" } },
-          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Construction Surveying and Layout" } },
-          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Topographic Surveys" } },
-          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Drone and UAV Surveying" } },
-          { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Oil and Gas Surveying" } }
-        ]
-      }
-    }
-  ]
-}
-</script>
+<meta name="description" content="Vista Geomatics provides municipal, construction, oil and gas, topographic, as-built, and drone surveying services throughout Alberta.">
+<title>Vista Geomatics | Professional Survey Solutions Across Alberta</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -1581,109 +1514,65 @@ body.quote-modal-open { overflow: hidden; }
 }
 
 
+/* Mouse-following topographic spotlight */
+.topo-spotlight {
+  --spot-x: 50vw;
+  --spot-y: 50vh;
+  position: fixed;
+  inset: 0;
+  z-index: 11;
+  pointer-events: none;
+  opacity: 0;
+  background-image: none;
+  background-repeat: repeat;
+  background-size: 980px auto;
+  background-position: center;
+  mix-blend-mode: screen;
+  -webkit-mask-image: radial-gradient(
+    circle 320px at var(--spot-x) var(--spot-y),
+    rgba(0,0,0,1) 0%,
+    rgba(0,0,0,.86) 20%,
+    rgba(0,0,0,.60) 42%,
+    rgba(0,0,0,.32) 66%,
+    rgba(0,0,0,.12) 84%,
+    transparent 100%
+  );
+  mask-image: radial-gradient(
+    circle 320px at var(--spot-x) var(--spot-y),
+    rgba(0,0,0,1) 0%,
+    rgba(0,0,0,.86) 20%,
+    rgba(0,0,0,.60) 42%,
+    rgba(0,0,0,.32) 66%,
+    rgba(0,0,0,.12) 84%,
+    transparent 100%
+  );
+  transition: opacity .28s ease;
+}
+.topo-spotlight.is-active { opacity: .34; }
 
-/* SEO content sections: RPR services and frequently asked questions */
-.rpr-section {
-  background:
-    radial-gradient(circle at 88% 20%, rgba(20,159,227,.11), transparent 34%),
-    linear-gradient(180deg, #020405 0%, #000 100%);
+@media (max-width: 820px), (pointer: coarse) {
+  .topo-spotlight { display: none; }
 }
-.rpr-layout {
-  display: grid;
-  grid-template-columns: minmax(0, 1.08fr) minmax(330px, .92fr);
-  gap: clamp(48px, 8vw, 118px);
-  align-items: start;
-}
-.rpr-copy .lead { max-width: 720px; }
-.rpr-copy > p:not(.eyebrow):not(.lead) {
-  max-width: 720px;
-  margin-top: 20px;
-  color: #959da2;
-  font-size: .9rem;
-  line-height: 1.95;
-}
-.rpr-points {
-  display: grid;
-  gap: 1px;
-  background: var(--line);
-}
-.rpr-point {
-  position: relative;
-  padding: 28px 30px;
-  background: #020303;
-}
-.rpr-point::before {
-  content: "";
-  position: absolute;
-  inset: 0 auto 0 0;
-  width: 2px;
-  background: var(--accent);
-}
-.rpr-point h3 {
-  color: #fff;
-  font-size: .82rem;
-  font-weight: 600;
-  letter-spacing: .08em;
-  text-transform: uppercase;
-}
-.rpr-point p {
-  margin-top: 10px;
-  color: var(--muted);
-  font-size: .8rem;
-  line-height: 1.8;
-}
-.faq-section {
-  background: linear-gradient(180deg, #000 0%, #020405 100%);
-}
-.faq-grid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 1px;
-  margin-top: 56px;
-  background: var(--line);
-}
-.faq-item {
-  min-height: 220px;
-  padding: clamp(28px, 3vw, 42px);
-  background: #020303;
-}
-.faq-item h3 {
-  color: #fff;
-  font-size: clamp(.92rem, 1.25vw, 1.08rem);
-  font-weight: 600;
-  line-height: 1.45;
-}
-.faq-item p {
-  margin-top: 16px;
-  color: #929a9f;
-  font-size: .84rem;
-  line-height: 1.85;
-}
-
-@media (max-width: 880px) {
-  .rpr-layout { grid-template-columns: 1fr; }
-  .nav-links.open { max-height: 580px; }
-}
-@media (max-width: 600px) {
-  .faq-grid { grid-template-columns: 1fr; }
-  .faq-item { min-height: 0; }
+@media (prefers-reduced-motion: reduce) {
+  .topo-spotlight { transition: none; }
 }
 
 </style>
+  <link rel="preload" href="vista-intro-scroll-v18.mp4?v=2" as="video" type="video/mp4" fetchpriority="high">
   <link rel="preload" href="vista-intro-poster-v15.jpg" as="image" type="image/jpeg" fetchpriority="high">
-  <link rel="preload" href="vista-intro-scroll-v18.mp4?v=2" as="video" type="video/mp4">
 </head>
 <body>
+  <div class="topo-spotlight" id="topo-spotlight" aria-hidden="true"></div>
 <header class="site-nav">
   <a class="brand" href="#top" aria-label="Vista Geomatics home"><img class="brand-logo" src="vista-logo-white.png" alt="Vista Geomatics"></a>
   <button class="menu-toggle" type="button" aria-label="Open navigation" aria-expanded="false"><span></span></button>
   <nav aria-label="Primary navigation">
     <ul class="nav-links">
       <li><a href="#about">About</a></li>
-      <li><a href="rpr.html">RPRs</a></li>
       <li><a href="#locations">Locations</a></li>
       <li><a href="#divisions">Divisions</a></li>
       <li><a href="#services">Services</a></li>
+      <li><a href="rpr.html">RPRs</a></li>
       <li><a href="#safety">Safety</a></li>
       <li><a href="#careers">Careers</a></li>
       <li><a href="#contact">Contact</a></li>
@@ -1703,7 +1592,7 @@ body.quote-modal-open { overflow: hidden; }
   <div class="hero-copy" id="hero-copy">
     <img class="hero-logo-img" src="vista-logo-white.png" alt="Vista Geomatics">
     
-    <p class="hero-tagline">Calgary Land Surveyors · RPRs · Survey Solutions Across Alberta</p>
+    <p class="hero-tagline">Professional Survey Solutions Across Alberta</p>
 
   </div>
   <aside class="hero-quote-rail" id="hero-quote-rail" aria-label="Start a project">
@@ -1724,9 +1613,9 @@ body.quote-modal-open { overflow: hidden; }
       <div class="section-inner about-layout reveal">
         <div class="about-copy">
           <p class="eyebrow">Company Overview</p>
-          <h1 class="heading">Calgary land surveyors.<br><strong>Reliable service across Alberta.</strong></h1>
-          <p>Vista Geomatics is a Calgary land surveying company providing Real Property Reports (RPRs) and multidisciplinary survey services throughout Alberta. Our team includes Alberta Land Surveyors, project managers, survey and geomatics technologists, field personnel, and CAD technicians.</p>
-          <p>We combine technical experience, current survey technology, and responsive project support to deliver accurate data and dependable results across municipal and legal surveys, construction, oil and gas, topographic, and aerial survey projects.</p>
+          <h1 class="heading">Professional expertise<br><strong>Personalized service</strong></h1>
+          <p>Vista Geomatics is a Calgary-based multidisciplinary land surveying company serving clients throughout Alberta. Our team includes Alberta Land Surveyors, project managers, survey and geomatics technologists, field personnel, and CAD technicians.</p>
+          <p>We combine technical experience, current survey technology, and responsive project support to deliver accurate data and dependable results across municipal, construction, oil and gas, and aerial survey projects.</p>
         </div>
         <div class="pillars" aria-label="Vista Geomatics strengths">
           <article class="pillar"><small>01</small><h3>Accurate Results</h3><p>Reliable field data, clear reporting, and careful quality control from project setup through final delivery.</p></article>
@@ -1736,42 +1625,12 @@ body.quote-modal-open { overflow: hidden; }
       </div>
     </section>
 
-    <section class="section rpr-section" id="rpr">
-      <div class="section-inner rpr-layout">
-        <div class="rpr-copy reveal">
-          <p class="eyebrow">Real Property Reports</p>
-          <h2 class="heading">RPR services in Calgary.<br><strong>Clear support from quote to completion.</strong></h2>
-          <p class="lead">Vista Geomatics prepares new and updated Real Property Reports for homeowners, real estate professionals, builders, and property managers in Calgary and surrounding communities.</p>
-          <p>Already have an existing RPR? Depending on the age of the report and changes to the property, an update may save time and cost compared with starting again. Send us the property address and your existing report, and our team will help determine the appropriate scope.</p>
-          <div class="button-row">
-            <a class="button" href="rpr.html" aria-label="Learn more about Vista Geomatics Real Property Report services">Explore RPR Services</a>
-            <a class="button secondary js-open-quote" href="quote-request-form.html" aria-label="Request a Real Property Report quote">Request an RPR Quote</a>
-            <a class="button secondary" href="tel:+14032704048">Call 403.270.4048</a>
-          </div>
-        </div>
-        <div class="rpr-points reveal" aria-label="Real Property Report services">
-          <article class="rpr-point">
-            <h3>New Real Property Reports</h3>
-            <p>Current field information and professional survey documentation for residential property needs.</p>
-          </article>
-          <article class="rpr-point">
-            <h3>Updates to Existing RPRs</h3>
-            <p>Review of an existing report and property changes to determine whether an updated RPR is appropriate.</p>
-          </article>
-          <article class="rpr-point">
-            <h3>Help Choosing the Right Survey</h3>
-            <p>Not sure whether you need an RPR, property line survey, development permit survey, or another service? Our coordinators will help clarify the request.</p>
-          </article>
-        </div>
-      </div>
-    </section>
-
 
     <section class="section locations-section" id="locations">
       <div class="section-inner locations-layout">
         <div class="locations-copy reveal">
           <p class="eyebrow">Connected Across Alberta</p>
-          <h2 class="heading">Local presence.<br><strong>Provincial reach.</strong></h2>
+          <h2 class="heading">Local presence<br><strong>Provincial reach</strong></h2>
           <p class="lead">From our main office in Calgary to field crews in Edmonton and Grande Prairie, we’re strategically connected to support projects across Alberta.</p>
 
           <div class="location-list" role="group" aria-label="Vista Geomatics locations">
@@ -1792,7 +1651,7 @@ body.quote-modal-open { overflow: hidden; }
 
         <div class="alberta-map-wrap reveal">
           <div class="alberta-map-canvas" id="alberta-map" aria-label="Interactive topographic map of Alberta showing Vista Geomatics locations">
-            <img class="alberta-map-image" src="alberta-topo.png" alt="Topographic relief map of Alberta showing Vista Geomatics service locations" loading="lazy" decoding="async">
+            <img class="alberta-map-image" src="alberta-topo.png" alt="Topographic relief model of Alberta" loading="lazy" decoding="async" fetchpriority="low">
             <svg class="map-links" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
               <path d="M59 81 C48 69 34 53 20 42"/>
               <path d="M59 81 C62 72 64 64 65 58"/>
@@ -1819,7 +1678,7 @@ body.quote-modal-open { overflow: hidden; }
       <div class="section-inner">
         <div class="reveal">
           <p class="eyebrow">Our Divisions</p>
-          <h2 class="heading">Three specialized teams.<br><strong>One standard of quality.</strong></h2>
+          <h2 class="heading">Three specialized teams<br><strong>One standard of quality</strong></h2>
           <p class="lead">Our divisions bring focused knowledge to urban development, complex construction, and remote oil and gas work while sharing the same commitment to accuracy, safety, and service.</p>
         </div>
         <div class="division-grid">
@@ -1851,38 +1710,38 @@ body.quote-modal-open { overflow: hidden; }
         <div class="services-header reveal">
           <div>
             <p class="eyebrow">Capabilities</p>
-            <h2 class="heading">Survey services for every<br><strong>stage of the project.</strong></h2>
+            <h2 class="heading">Survey services for every<br><strong>stage of the project</strong></h2>
           </div>
           <p class="lead">From initial site data to final as-built verification, our crews provide field-to-finish support tailored to the work.</p>
         </div>
         <div class="service-grid">
           <article class="service-card reveal">
-            <div class="service-icon" aria-hidden="true"><img src="icon-municipal.png" alt="" loading="lazy" decoding="async"></div>
-            <h3>Real Property Reports &amp; Legal Surveys</h3>
-            <p>New and updated RPRs, property line surveys, development permit surveys, subdivisions, grading certificates, condominium surveys, and new-home surveys.</p>
+            <div class="service-icon" aria-hidden="true"><img src="icon-municipal.png" alt="" loading="lazy" decoding="async" fetchpriority="low"></div>
+            <h3>Municipal &amp; Legal Surveys</h3>
+            <p>Real Property Reports, property line surveys, development permits, subdivisions, grading certificates, condominium surveys, and new-home surveys.</p>
           </article>
           <article class="service-card reveal">
-            <div class="service-icon" aria-hidden="true"><img src="icon-construction.png" alt="" loading="lazy" decoding="async"></div>
+            <div class="service-icon" aria-hidden="true"><img src="icon-construction.png" alt="" loading="lazy" decoding="async" fetchpriority="low"></div>
             <h3>Construction Layout</h3>
             <p>Deep and shallow utilities, roads, bridges, earthworks, gridlines, piles, anchor bolts, structural layout, and surface improvements.</p>
           </article>
           <article class="service-card reveal">
-            <div class="service-icon" aria-hidden="true"><img src="icon-oil-gas.png" alt="" loading="lazy" decoding="async"></div>
+            <div class="service-icon" aria-hidden="true"><img src="icon-oil-gas.png" alt="" loading="lazy" decoding="async" fetchpriority="low"></div>
             <h3>Oil &amp; Gas Surveying</h3>
             <p>Well-site and pipeline surveys, underground facility locations, pre-engineering surveys, cadastral work, and land-acquisition support.</p>
           </article>
           <article class="service-card reveal">
-            <div class="service-icon" aria-hidden="true"><img src="icon-drone.png" alt="" loading="lazy" decoding="async"></div>
+            <div class="service-icon" aria-hidden="true"><img src="icon-drone.png" alt="" loading="lazy" decoding="async" fetchpriority="low"></div>
             <h3>Drone &amp; UAV Surveying</h3>
             <p>High-resolution aerial mapping, orthomosaics, topographic data, site documentation, progress imagery, stockpile volumes, and large-area capture.</p>
           </article>
           <article class="service-card reveal">
-            <div class="service-icon" aria-hidden="true"><img src="icon-topographic.png" alt="" loading="lazy" decoding="async"></div>
+            <div class="service-icon" aria-hidden="true"><img src="icon-topographic.png" alt="" loading="lazy" decoding="async" fetchpriority="low"></div>
             <h3>Topographic Surveys</h3>
             <p>Detailed surface, feature, and elevation data for planning, engineering, design, development, drainage, and construction.</p>
           </article>
           <article class="service-card reveal">
-            <div class="service-icon" aria-hidden="true"><img src="icon-as-built.png" alt="" loading="lazy" decoding="async"></div>
+            <div class="service-icon" aria-hidden="true"><img src="icon-as-built.png" alt="" loading="lazy" decoding="async" fetchpriority="low"></div>
             <h3>As-Built &amp; Monitoring</h3>
             <p>As-built verification, volume reporting, deformation monitoring, underground locate surveys, and data preparation for machine-control systems.</p>
           </article>
@@ -1890,40 +1749,12 @@ body.quote-modal-open { overflow: hidden; }
       </div>
     </section>
 
-    <section class="section faq-section" id="faq">
-      <div class="section-inner">
-        <div class="reveal">
-          <p class="eyebrow">Common Questions</p>
-          <h2 class="heading">RPR and land survey<br><strong>questions answered.</strong></h2>
-          <p class="lead">A few quick answers to help you decide what information to send with your quote request.</p>
-        </div>
-        <div class="faq-grid">
-          <article class="faq-item reveal">
-            <h3>What is a Real Property Report?</h3>
-            <p>A Real Property Report, commonly called an RPR, is a survey document showing property boundaries and the location of visible improvements on the parcel.</p>
-          </article>
-          <article class="faq-item reveal">
-            <h3>When might I need an RPR?</h3>
-            <p>An RPR may be requested for a property sale, municipal compliance, a development or renovation project, or when current property information is needed.</p>
-          </article>
-          <article class="faq-item reveal">
-            <h3>Can an existing RPR be updated?</h3>
-            <p>Possibly. Send us the existing report and details about changes to the property. We will review the information and advise whether an update or a new RPR is the appropriate service.</p>
-          </article>
-          <article class="faq-item reveal">
-            <h3>What should I include with my quote request?</h3>
-            <p>Include the property address, your contact information, the service you believe you need, and a copy of any existing RPR or related property document available to you.</p>
-          </article>
-        </div>
-      </div>
-    </section>
-
     <section class="section safety-section" id="safety">
       <div class="section-inner safety-layout reveal">
-        <div class="target-zero-logo"><img src="target-zero.png" alt="Vista Geomatics Target Zero safety program" loading="lazy" decoding="async"></div>
+        <div class="target-zero-logo"><img src="target-zero.png" alt="Target Zero" loading="lazy" decoding="async" fetchpriority="low"></div>
         <div class="safety-copy">
           <p class="eyebrow">Safety Promise</p>
-          <h2 class="heading">Everyone goes home safely.<br><strong>Every day.</strong></h2>
+          <h2 class="heading">Everyone goes home safely<br><strong>Every day</strong></h2>
           <p class="safety-promise">Safety is fundamental to how we plan and perform our work. We believe workplace injuries, illnesses, and property damage are preventable through effective hazard identification, clear communication, responsible decision-making, and proactive management of risk.</p>
         </div>
       </div>
@@ -1933,7 +1764,7 @@ body.quote-modal-open { overflow: hidden; }
       <div class="section-inner">
         <div class="reveal">
           <p class="eyebrow">Core Values</p>
-          <h2 class="heading">The principles behind<br><strong>every project.</strong></h2>
+          <h2 class="heading">The principles behind<br><strong>every project</strong></h2>
         </div>
         <div class="value-grid">
           <article class="value reveal"><h3>Safety</h3><p>Protecting our employees, clients, the public, and the communities where we work.</p></article>
@@ -1950,7 +1781,7 @@ body.quote-modal-open { overflow: hidden; }
       <div class="section-inner careers-card reveal">
         <div>
           <p class="eyebrow">Careers</p>
-          <h2>Build your career<br>with Vista Geomatics.</h2>
+          <h2>Build your career<br>with Vista Geomatics</h2>
           <p>We value skilled, safety-minded people who take pride in accurate work, professional service, and supporting their team. General employment inquiries and résumés are welcome.</p>
         </div>
         <div class="careers-action">
@@ -1963,7 +1794,7 @@ body.quote-modal-open { overflow: hidden; }
       <div class="section-inner contact-layout">
         <div class="reveal">
           <p class="eyebrow">Contact Us</p>
-          <h2 class="heading">Let’s discuss your<br><strong>next survey project.</strong></h2>
+          <h2 class="heading">Let’s discuss your<br><strong>next survey project</strong></h2>
           <p class="lead">Tell us what you are planning, where the work is located, and what deliverables you need.</p>
           <p class="contact-assist">Not sure exactly what survey you need? Send us the project information and our team will help determine the appropriate scope.</p>
           <div class="button-row">
@@ -1984,7 +1815,7 @@ body.quote-modal-open { overflow: hidden; }
       <div class="section-inner social-grid">
         <div class="social-intro reveal">
           <p class="eyebrow">Stay Social</p>
-          <h2 class="social-heading">Follow our work.<br><strong>Share your experience.</strong></h2>
+          <h2 class="social-heading">Follow our work<br><strong>Share your experience</strong></h2>
           <p class="social-copy">Connect with Vista Geomatics for company updates, field highlights, project insights, and opportunities across Alberta.</p>
         </div>
 
@@ -2011,7 +1842,7 @@ body.quote-modal-open { overflow: hidden; }
           <div class="google-review-display">
             <p class="google-review-kicker">Your experience matters</p>
             <div class="google-stars" role="img" aria-label="Five stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
-            <h3 class="google-review-title">See what clients are saying <strong>on Google.</strong></h3>
+            <h3 class="google-review-title">See what clients are saying <strong>on Google</strong></h3>
             <p class="google-review-copy">Read customer feedback or share your experience with Vista Geomatics. Your review helps others choose the right survey team for their project.</p>
           </div>
 
@@ -2039,7 +1870,7 @@ body.quote-modal-open { overflow: hidden; }
   <div class="footer-inner">
     <a class="brand" href="#top"><img class="brand-logo" src="vista-logo-white.png" alt="Vista Geomatics"></a>
     <nav class="footer-nav" aria-label="Footer navigation">
-      <a href="#about">About</a><a href="#rpr">RPRs</a><a href="#locations">Locations</a><a href="#divisions">Divisions</a><a href="#services">Services</a><a href="#faq">FAQ</a><a href="#safety">Safety</a><a href="#contact">Contact</a><a href="#social">Social</a>
+      <a href="#about">About</a><a href="#locations">Locations</a><a href="#divisions">Divisions</a><a href="#services">Services</a><a href="#safety">Safety</a><a href="#contact">Contact</a><a href="#social">Social</a>
     </nav>
     <span class="copyright">© 2026 Vista Geomatics Ltd.</span>
   </div>
@@ -2301,5 +2132,50 @@ window.addEventListener('message', event => {
 });
 
 </script>
+
+<script>
+(() => {
+  const spotlight = document.getElementById('topo-spotlight');
+  const pageContent = document.querySelector('.page-content');
+  if (!spotlight || !pageContent || !window.matchMedia('(pointer:fine)').matches) return;
+
+  let raf = 0;
+  let x = window.innerWidth / 2;
+  let y = window.innerHeight / 2;
+
+  const draw = () => {
+    raf = 0;
+    spotlight.style.setProperty('--spot-x', `${x}px`);
+    spotlight.style.setProperty('--spot-y', `${y}px`);
+  };
+
+  let topoLoaded = false;
+
+  const ensureTopoLoaded = () => {
+    if (topoLoaded) return;
+    topoLoaded = true;
+    spotlight.style.backgroundImage = 'url("topo-spotlight.png")';
+  };
+
+  const setActiveState = event => {
+    const contentTop = pageContent.getBoundingClientRect().top;
+    const overContent = event.clientY >= Math.max(0, contentTop);
+    if (overContent) ensureTopoLoaded();
+    spotlight.classList.toggle('is-active', overContent);
+  };
+
+  window.addEventListener('pointermove', event => {
+    x = event.clientX;
+    y = event.clientY;
+    setActiveState(event);
+    if (!raf) raf = requestAnimationFrame(draw);
+  }, { passive: true });
+
+  document.documentElement.addEventListener('mouseleave', () => {
+    spotlight.classList.remove('is-active');
+  });
+})();
+</script>
+
 </body>
 </html>
