@@ -1558,8 +1558,34 @@ body.quote-modal-open { overflow: hidden; }
 }
 
 </style>
-  <link rel="preload" href="vista-intro-scroll-v18.mp4?v=2" as="video" type="video/mp4" fetchpriority="high">
+  <link rel="preload" href="vista-intro-scroll-v18.mp4?v=2" as="video" type="video/mp4" fetchpriority="high" media="(min-width: 601px)">
   <link rel="preload" href="vista-intro-poster-v15.jpg" as="image" type="image/jpeg" fetchpriority="high">
+
+<style>
+/* Mobile performance + Alberta map label fix */
+@media (max-width: 600px) {
+  /* Grande Prairie sits near the west edge of the map; place its label inward on phones. */
+  .marker-grande-prairie .marker-label {
+    left: calc(100% + 12px);
+    right: auto;
+    text-align: left;
+    min-width: 108px;
+  }
+
+  /* Avoid unnecessary off-screen rendering work on long mobile pages. */
+  .section,
+  .footer {
+    content-visibility: auto;
+    contain-intrinsic-size: 900px;
+  }
+
+  /* Keep the map fully inside the viewport. */
+  .alberta-map-canvas {
+    width: min(86vw, 410px);
+  }
+}
+</style>
+
 </head>
 <body>
   <div class="topo-spotlight" id="topo-spotlight" aria-hidden="true"></div>
@@ -1583,8 +1609,8 @@ body.quote-modal-open { overflow: hidden; }
 
 <main id="top">
   <img class="intro-poster" id="intro-poster" src="vista-intro-poster-v15.jpg" alt="" fetchpriority="high" decoding="async" aria-hidden="true">
-  <video class="intro-video" id="intro-video" muted playsinline preload="auto" poster="vista-intro-poster-v15.jpg" aria-label="Mountain and forest introduction for Vista Geomatics">
-    <source src="vista-intro-scroll-v18.mp4?v=2" type="video/mp4">
+  <video class="intro-video" id="intro-video" muted playsinline preload="none" poster="vista-intro-poster-v15.jpg" aria-label="Mountain and forest introduction for Vista Geomatics">
+    <source data-src="vista-intro-scroll-v18.mp4?v=2" type="video/mp4">
   </video>
   <div class="intro-bottom-fade" id="intro-bottom-fade" aria-hidden="true"></div>
   <div class="intro-final-fade" id="intro-final-fade" aria-hidden="true"></div>
@@ -2023,6 +2049,34 @@ video.addEventListener('error', () => {
 window.addEventListener('scroll', requestDraw, { passive: true });
 window.addEventListener('resize', requestDraw, { passive: true });
 window.addEventListener('pageshow', requestDraw);
+
+
+function loadIntroVideoSource() {
+  const source = video.querySelector('source[data-src]');
+  if (!source || source.src) return;
+  source.src = source.dataset.src;
+  source.removeAttribute('data-src');
+  video.load();
+}
+
+const mobileIntro = window.matchMedia('(max-width: 600px), (pointer: coarse)').matches;
+if (mobileIntro) {
+  const startMobileVideoLoad = () => {
+    if ('requestIdleCallback' in window) {
+      requestIdleCallback(loadIntroVideoSource, { timeout: 1800 });
+    } else {
+      setTimeout(loadIntroVideoSource, 900);
+    }
+  };
+  if (document.readyState === 'complete') {
+    startMobileVideoLoad();
+  } else {
+    window.addEventListener('load', startMobileVideoLoad, { once: true });
+  }
+} else {
+  loadIntroVideoSource();
+}
+
 
 menuButton.addEventListener('click', () => {
   const open = menuButton.getAttribute('aria-expanded') === 'true';
